@@ -33,7 +33,7 @@ export default function Register(){
         }
 
         try{
-             fetch("http://localhost:3000/api/addUser",{
+             fetch("https://l7asba.vercel.app/api/addUser",{
                 method:"POST",
                 headers:{
                     "Content-type":"application/json",
