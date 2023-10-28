@@ -55,7 +55,7 @@ export default function Home() {
 
   useEffect(() => {
     if (auth) {
-      fetch("https://l7asba.vercel.app/api/allData", {
+      fetch("/api/allData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -98,7 +98,7 @@ export default function Home() {
       return;
     }
 
-    fetch("https://l7asba.vercel.app/api/addData", {
+    fetch("/api/addData", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -126,7 +126,7 @@ export default function Home() {
       return;
     }
     try {
-      fetch("https://l7asba.vercel.app/api/deleteData", {
+      fetch("/api/deleteData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -151,7 +151,7 @@ export default function Home() {
 
   function calculate() {
     try {
-      fetch("https://l7asba.vercel.app/api/calculateData", {
+      fetch("/api/calculateData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

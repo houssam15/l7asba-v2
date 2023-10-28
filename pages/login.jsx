@@ -25,7 +25,7 @@ export default function Login(){
             alert("some fields are empty !!")
         }else{
 
-            fetch("https://l7asba.vercel.app/api/login",{
+            fetch(`/api/login`,{
                 method:'POST',
                 headers: {
                     "Content-Type": "application/json",
