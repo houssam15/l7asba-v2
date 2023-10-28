@@ -85,8 +85,79 @@ export default async function CalculateData(
       }
     }
 
-    finalResult = finalResult.filter(elm=>JSON.parse(elm.equipe).includes(elm.username)&&elm.username===username)
-    return res.status(200).json({ message: "created succesfully", data:finalResult });
+    // for(let elm of equipes){
+    //   let var1: string | any = {};
+    //   for(let els of finalResult){
+    //     if(els.equipe===elm){
+    //       console.log(els.somme)
+
+    //       if(isNaN(var1[els.username])){
+    //         var1[els.username]=0
+    //       }else{
+    //         var1[els.username] += els.somme
+    //       }
+          
+    //     }
+    //   }
+    // }
+    //result ={equipe:...,moyenne:.....,total:...,data:{user:...}}
+
+    //finalResult = finalResult.filter(elm=>JSON.parse(elm.equipe).includes(elm.username)&&elm.username===username)
+
+ 
+    
+interface TeamData {
+  [key: string]: number;
+}
+
+interface FinalData {
+  equipe: string;
+  moyenne: number;
+  total: number;
+  data: TeamData;
+}
+
+let equipeData: FinalData[] = equipes.map((equipe) => {
+  let total = 0;
+  for (let item of finalResult) {
+    if (item.equipe === equipe) {
+      total = item.total;
+      break;
+    }
+  }
+
+  let equipeMembers: string[] = JSON.parse(equipe);
+  let moyenne: number = total / equipeMembers.length;
+  let data: TeamData = {};
+
+  // for (let member of equipeMembers) {
+  //   for (let item of finalResult) {
+  //     if (item.username === member) {
+  //       if(!isNaN(data[member])){
+  //         data[member] += item.somme;
+  //       }
+  //       else{
+  //         data[member]=0
+  //       }
+        
+  //     }
+  //   }
+  // }
+  
+  for(let elm of finalResult){
+    if(elm.equipe===JSON.stringify(equipeMembers)){
+      data[elm.username]=elm.somme
+    }
+  }
+  console.log(equipeMembers,total,moyenne)
+  console.log(finalResult)
+  
+  return { equipe, moyenne, total, data };
+});
+
+    
+
+return res.status(200).json({ message: "created succesfully", data:equipeData });
   } catch (err) {
     console.error(err);
   }

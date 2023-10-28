@@ -270,13 +270,29 @@ export default function Home() {
           {total.length > 0 ? (
   <div>
     <h1>Result : </h1>
-    <ul>
-      {total.map((elm) => (
-        <li key={elm.username}>
-          {elm.username} ------ {elm.equipe} ----- {elm.somme} dh / {elm.total} dh ------- moyen : {elm.total/JSON.parse(elm.equipe).length} dh
-        </li>
-      ))}
-    </ul>
+    {total.map(elm => (
+      <table >
+        <thead>
+         {Object.keys(elm.data).map(usr=>(
+          <th>{usr}</th>
+         ))
+         }
+        </thead>
+        <tbody>
+          <tr>
+           moyen : {elm.moyenne.toFixed(2)} || total : {elm.total.toFixed(2)}
+          </tr>
+          <tr>
+            {Object.keys(elm.data).map(usr =>(
+              <td>{elm.data[usr]}</td>
+            ))
+            }
+          </tr>
+        </tbody>
+      </table>
+    ))
+
+    }
   </div>
 ) : (
   <></>
