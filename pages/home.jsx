@@ -161,14 +161,10 @@ export default function Home() {
       })
         .then(async (res) => {
           const data = await res.json();
-          if(res.status!==200){
-            alert('calcul fail , try later !!!')
-            return
-          }
-          alert(data.message)
-          for(let elm of data.data){
-            console.log(elm)
-          }
+          if (res.status !== 200) {
+            alert("calcul fail , try later !!!");
+            return;
+          }          
           setTotal(data.data);
 
           return;
@@ -183,15 +179,112 @@ export default function Home() {
   return (
     <>
       {auth ? (
-        <>
+        <div className="container">
+          <div className="nav">
+            <span>welcome {router.query.username} </span>
+            <div className="btn-cnt">
+              <button className="calculate" onClick={() => calculate()}>
+                cal
+              </button>
+              <button className="logout" onClick={() => logout()}>
+                out
+              </button>
+            </div>
+          </div>
           <div>
-            welcome {router.query.username} with id {router.query.id}{" "}
-            <button onClick={() => calculate()}>calculate</button>
-            <button onClick={() => logout()}>logout</button>
+            <div className="add">
+              <h2 className="title1"> add new record : </h2>
+              <form className="add-form" onSubmit={(e) => handleSubmit(e)}>
+                <div>
+                  <label className="monspan"> montant :</label>
+                  <input
+                    className="montant"
+                    type="number"
+                    name="montant"
+                    placeholder="montant"
+                    onChange={handleChange}
+                    value={formD.montant}
+                  />
+                </div>
+
+                <div className="equipe-cont">
+                  <span className="equipe-span">equipe :</span>
+
+                  <div className="equipe-input-cont">
+                    <div className="hello">
+                      <span>houssam</span>
+                      <input
+                        type="checkbox"
+                        name="equipe"
+                        value="houssam"
+                        onChange={handleChange}
+                        checked={formD.equipe.includes("houssam")}
+                      />
+                    </div>
+
+                    <div className="hello">
+                      <span>nourdine</span>
+                      <input
+                        type="checkbox"
+                        name="equipe"
+                        value="nourdine"
+                        onChange={handleChange}
+                        checked={formD.equipe.includes("nourdine")}
+                      />
+                    </div>
+
+                    <div className="hello">
+                      <span>abdwahed</span>
+                      <input
+                        type="checkbox"
+                        name="equipe"
+                        value="abdwahed"
+                        onChange={handleChange}
+                        checked={formD.equipe.includes("abdwahed")}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <button className="submitbtn" type="submit">Add</button>
+              </form>
+            </div>
           </div>
           <div>
             <div>
-              <table>
+              {total.length > 0 ? (
+                <div className="result-container">
+                  <h1 className="result-title">Result : </h1>
+                  {total.map((elm) => (
+                    <table className="result-table">
+                      <thead>
+                        {Object.keys(elm.data).map((usr) => (
+                          <th>{usr}</th>
+                        ))}
+                      </thead>
+                      <tbody>
+                        <tr >
+                          <td className="moyen-total" colSpan={3}>
+                          moyen : {elm.moyenne.toFixed(2)} dh -------------  total :{" "}
+                          {elm.total.toFixed(2)} dh
+                          </td>
+                          
+                        </tr>
+                        <tr>
+                          {Object.keys(elm.data).map((usr) => (
+                            <td>{elm.data[usr]}</td>
+                          ))}
+                        </tr>
+                      </tbody>
+                    </table>
+                  ))}
+                </div>
+              ) : (
+                <></>
+              )}
+            </div>
+
+            <div className="table-container">
+              <table className="table1">
                 <thead>
                   <th>username</th>
                   <th>time</th>
@@ -200,17 +293,20 @@ export default function Home() {
                   <th>action</th>
                 </thead>
                 <tbody>
-                  {data.map((elm) => (
+                  {data.reverse().map((elm) => (
                     <tr key={elm._id}>
                       <td>{elm.username}</td>
                       <td>{wantedForm(elm.time)}</td>
                       <td>{elm.montant} dh</td>
-                      <td>{JSON.stringify(elm.equipe)}</td>
+                      <td>{elm.equipe.length} </td>
 
                       <td>
                         {elm.username === router.query.username ? (
                           <>
-                            <button onClick={() => deleteData(elm._id)}>
+                            <button
+                              className="dlt-btn"
+                              onClick={() => deleteData(elm._id)}
+                            >
                               delete
                             </button>
                           </>
@@ -223,81 +319,8 @@ export default function Home() {
                 </tbody>
               </table>
             </div>
-           
-
-            <div>
-              <h2>{router.query.username} adding ..</h2>
-              <form onSubmit={(e) => handleSubmit(e)}>
-                <label>montant :</label>
-                <input
-                  type="number"
-                  name="montant"
-                  placeholder="montant"
-                  onChange={handleChange}
-                  value={formD.montant}
-                />
-                <label>
-                  <p>equipe:</p>
-                  <span>houssam</span>
-                  <input
-                    type="checkbox"
-                    name="equipe"
-                    value="houssam"
-                    onChange={handleChange}
-                    checked={formD.equipe.includes("houssam")}
-                  />
-                  <span>nourdine</span>
-                  <input
-                    type="checkbox"
-                    name="equipe"
-                    value="nourdine"
-                    onChange={handleChange}
-                    checked={formD.equipe.includes("nourdine")}
-                  />
-                  <span>abdwahed</span>
-                  <input
-                    type="checkbox"
-                    name="equipe"
-                    value="abdwahed"
-                    onChange={handleChange}
-                    checked={formD.equipe.includes("abdwahed")}
-                  />
-                </label>
-                <button type="submit">Add</button>
-              </form>
-            </div>
           </div>
-          {total.length > 0 ? (
-  <div>
-    <h1>Result : </h1>
-    {total.map(elm => (
-      <table >
-        <thead>
-         {Object.keys(elm.data).map(usr=>(
-          <th>{usr}</th>
-         ))
-         }
-        </thead>
-        <tbody>
-          <tr>
-           moyen : {elm.moyenne.toFixed(2)} || total : {elm.total.toFixed(2)}
-          </tr>
-          <tr>
-            {Object.keys(elm.data).map(usr =>(
-              <td>{elm.data[usr]}</td>
-            ))
-            }
-          </tr>
-        </tbody>
-      </table>
-    ))
-
-    }
-  </div>
-) : (
-  <></>
-)}
-        </>
+        </div>
       ) : (
         <>
           <h1>please login :(</h1>

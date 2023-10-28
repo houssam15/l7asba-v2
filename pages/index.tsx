@@ -1,18 +1,16 @@
 
 export default function Home() {
   return (
-    <div className="container">
-      
-    <div className="login">
+    <div className="index">
+      <div className="box1">
+      <h1 >L3CHRA APP</h1>
+      </div>
+    <div className="box2">
     <a href="/login">Login</a>
     </div>
-    <div className="register">
+    <div className="box3">
       <a href="/register">Register</a>
     </div>
-
-      
-
-     
 
       <style jsx global>{`
         html,

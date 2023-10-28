@@ -37,7 +37,7 @@ export default function Login(){
                 if(res.status!==200){
                     alert(data.message)
                 }else {
-                    alert(data.message)
+                    
                     if (typeof window !== 'undefined') {
                         window.sessionStorage.setItem('isauth',true)
                       }
@@ -52,15 +52,16 @@ export default function Login(){
     }
     if(!auth){
         return (<>
-            <div className="container">
-               <form onSubmit={(e)=>handleSubmit(e)}>
-   
+            <div className="login">
+               <form className="form-login" onSubmit={(e)=>handleSubmit(e)}>
                    <input
+                   className="username"
                      type="text"
                      placeholder="username" 
                      value={username}
                      onChange={(e)=>setUsername(e.target.value)}/>
                      <input
+                     className="password"
                      type="password"
                      placeholder="Password"
                      value={password}
@@ -68,10 +69,14 @@ export default function Login(){
                      />
                    
                      <button
+                     className="login-btn"
                        type="submit"
                      >Login</button>
                </form>
-               <a href="/register">Register</a>
+               <div className="register">
+                <p>register now !</p>
+               <a  href="/register">Register</a>
+               </div>
            </div>
        </>);
     }else{

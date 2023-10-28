@@ -60,31 +60,40 @@ export default function Register(){
     if(!auth){
         return(
             <>
-                <div className="container">
-                    <form onSubmit={handleSubmit}>
+                <div className="login">
+                    <form className="form-login" onSubmit={handleSubmit}>
         
                         <input
                           type="text"
                           placeholder="username" 
                           value={username}
+                          className="username"
                           onChange={(e)=>setUsername(e.target.value)}/>
                           <input
                           type="password"
                           placeholder="Password"
                           value={password}
+                          className="password"
                           onChange={(e)=>setPassword(e.target.value)}
                           />
                         <input
                           type="password"
+                          className="password"
                           placeholder="Repeat Password"
                           value={newPassword}
                           onChange={(e)=>setNewPassword(e.target.value)}
                           />
                           <button
                             type="submit"
+                            className="login-btn"
                           >Register</button>
                     </form>
+                    <div className="register">
+                    <p>Login now !</p>
+
                     <a href="/login">Login</a>
+
+                    </div>
 
                 </div>
         

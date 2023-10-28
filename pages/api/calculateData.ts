@@ -130,32 +130,29 @@ let equipeData: FinalData[] = equipes.map((equipe) => {
   let moyenne: number = total / equipeMembers.length;
   let data: TeamData = {};
 
-  // for (let member of equipeMembers) {
-  //   for (let item of finalResult) {
-  //     if (item.username === member) {
-  //       if(!isNaN(data[member])){
-  //         data[member] += item.somme;
-  //       }
-  //       else{
-  //         data[member]=0
-  //       }
-        
-  //     }
-  //   }
-  // }
+  
   
   for(let elm of finalResult){
     if(elm.equipe===JSON.stringify(equipeMembers)){
       data[elm.username]=elm.somme
     }
   }
-  console.log(equipeMembers,total,moyenne)
-  console.log(finalResult)
+  
   
   return { equipe, moyenne, total, data };
 });
 
-    
+
+for(let a of equipeData){
+  for(let b of Object.keys(a.data) ){
+    if(!JSON.parse(a.equipe).includes(b)){
+        delete a.data[b]
+    }
+  }
+}  
+
+console.log(equipeData)
+
 
 return res.status(200).json({ message: "created succesfully", data:equipeData });
   } catch (err) {
