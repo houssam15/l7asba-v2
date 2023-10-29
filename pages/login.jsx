@@ -53,6 +53,7 @@ export default function Login(){
     if(!auth){
         return (<>
             <div className="login">
+                    new version is comming ...
                <form className="form-login" onSubmit={(e)=>handleSubmit(e)}>
                    <input
                    className="username"
